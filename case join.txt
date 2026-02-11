@@ -1,0 +1,90 @@
+
+D:\laragon\bin\mysql\mysql-8.4.3-winx64\bin>mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 628
+Server version: 8.4.3 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database bioskop;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use bioskop;
+Database changed
+mysql> create table film(
+    ->     id_film int auto_increment primary key,
+    ->     judul varchar(100));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>  create table ticket(
+    ->      id_tiket int auto_increment primary key,
+    ->      id_film int,
+    ->      nama_penonton varchar(100));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into film(id_film,judul) values(1,'Frozen'),(2,'Moanna'),(4,'Kungfu Panda');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into ticket(id_film,nama_penonton) values(1,'Andi'),(2,'Marno'),(3,'Reza');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from film
+    -> ;
++---------+--------------+
+| id_film | judul        |
++---------+--------------+
+|       1 | Frozen       |
+|       2 | Moanna       |
+|       4 | Kungfu Panda |
++---------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from ticket;
++----------+---------+---------------+
+| id_tiket | id_film | nama_penonton |
++----------+---------+---------------+
+|        1 |       1 | Andi          |
+|        2 |       2 | Marno         |
+|        3 |       3 | Reza          |
++----------+---------+---------------+
+3 rows in set (0.00 sec)
+
+
+mysql> select f.judul, t.nama_penonton from ticket t inner join film f on t.id_film = f.id_film;
++--------+---------------+
+| judul  | nama_penonton |
++--------+---------------+
+| Frozen | Andi          |
+| Moanna | Marno         |
++--------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select f.judul from ticket t right join film f on t.id_film = f.id_film;
++--------------+
+| judul        |
++--------------+
+| Frozen       |
+| Moanna       |
+| Kungfu Panda |
++--------------+
+3 rows in set (0.00 sec)
+
+mysql> select t.nama_penonton from ticket t left join film f on t.id_film = f.id_film;
++---------------+
+| nama_penonton |
++---------------+
+| Andi          |
+| Marno         |
+| Reza          |
++---------------+
+3 rows in set (0.00 sec)
+
+mysql>
